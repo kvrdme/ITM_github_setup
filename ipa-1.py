@@ -142,6 +142,8 @@ def body_mass_index(weight, height):
     # Stay within the function. Only use the parameters as input. The function should return your answer.
    
     weight_kg = float(weight/2.2)
-    height_meters = height[0]/3.281+height[1]/39.37
+    height_ft=height[0]
+    height_in=height[1]
+    height_meters = height_ft/3.281+height_in/39.37
     bmi = float(weight_kg/(height_meters)**2)
     return bmi
