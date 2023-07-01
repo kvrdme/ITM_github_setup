@@ -5,9 +5,6 @@
 This assignment will develop your ability to manipulate data.
 '''
 
-import importlib  
-sample_data = importlib.import_module("ipa-3-sample-data")
-
 def relationship_status(from_member, to_member, social_graph):
     '''Relationship Status.
     20 points.
@@ -58,9 +55,6 @@ def relationship_status(from_member, to_member, social_graph):
         else:
             return "no relationship"
 
-from_member="@chums"
-to_member="@joaquin"
-print(f"{from_member} and {to_member}'s relationship status is {relationship_status(from_member,to_member,sample_data.social_graph)}")
 
 def tic_tac_toe(board):
     '''Tic Tac Toe.
@@ -88,7 +82,42 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    
+    win_cases=[]
+    board_size=len(board)
+    #row
+    for i in range(board_size):
+        win_case=[]
+        for j in range(board_size):
+            win_case.append((i,j))
+        win_cases.append(win_case)
+        
+    #column
+    for j in range(board_size):
+        win_case=[]
+        for i in range(board_size):
+            win_case.append((i,j))
+        win_cases.append(win_case)
+        
+    #diagonals
+    win_case_1=[]
+    win_case_2=[]
+    
+    for i in range(board_size):
+        win_case_1.append((i, i))
+        win_case_2.append((board_size - i - 1, i))
+
+    win_cases.append(win_case_1)
+    win_cases.append(win_case_2)
+    
+
+    for win_case in win_cases:
+        for win_symbol in ['O','X']:               
+            if all(board[y][x]==win_symbol for y,x in win_case):
+                return win_symbol
+
+    return "NO WINNER"            
+        
 
 def eta(first_stop, second_stop, route_map):
     '''ETA.
@@ -121,4 +150,30 @@ def eta(first_stop, second_stop, route_map):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    if first_stop == second_stop:
+        total_travel_time = 0
+        for leg in route_map:
+            total_travel_time += route_map[leg]['travel_time_mins']
+        return total_travel_time
+    
+    visited = set()
+    queue = [(first_stop, 0)]
+    queue_index = 0
+    
+    while queue_index < len(queue):
+        current_stop, total_travel_time = queue[queue_index]
+        queue_index += 1
+        
+        if current_stop == second_stop:
+            return total_travel_time
+        
+        visited.add(current_stop)
+        
+        for leg in route_map:
+            if leg[0] == current_stop and leg[1] not in visited:
+                next_stop = leg[1]
+                travel_time = route_map[leg]['travel_time_mins']
+                queue.append((next_stop, total_travel_time + travel_time))
+    
+    raise ValueError(f"No route found from {first_stop} to {second_stop}")
+
