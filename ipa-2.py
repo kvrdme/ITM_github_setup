@@ -121,7 +121,7 @@ def shift_by_letter(letter, letter_shift):
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     
     index_of_letter = (alphabet.index(letter_shift)) % len(alphabet)
-    shifted_letter = alphabet[index_of_letter+alphabet.index(letter)]
+    shifted_letter = alphabet[(index_of_letter+alphabet.index(letter))% len(alphabet)]
 
     return shifted_letter
 
